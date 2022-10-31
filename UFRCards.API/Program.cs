@@ -11,10 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddCors();
 
-builder.Services.AddDbContext<UfrContext>(options =>
+builder.Services.AddDbContext<Context>(options =>
 {
     var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-    var migrationAssembly = typeof(UfrContext).Namespace;
+    var migrationAssembly = typeof(Context).Namespace;
     
     var connectionString = string.Empty;
     
@@ -38,7 +38,7 @@ var app = builder.Build();
 //Middleware
 
 using var scope = app.Services.CreateScope();
-var context = scope.ServiceProvider.GetRequiredService<UfrContext>();
+var context = scope.ServiceProvider.GetRequiredService<Context>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
 try

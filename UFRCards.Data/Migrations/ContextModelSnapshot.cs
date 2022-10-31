@@ -9,8 +9,8 @@ using UFRCards.Data;
 
 namespace UFRCards.Data.Migrations
 {
-    [DbContext(typeof(UfrContext))]
-    partial class UfrContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(Context))]
+    partial class ContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
@@ -21,7 +21,7 @@ namespace UFRCards.Data.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("UFRCards.Data.Entities.Card", b =>
+            modelBuilder.Entity("UFRCards.Data.Entities.Answer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -29,15 +29,37 @@ namespace UFRCards.Data.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CardText")
+                    b.Property<string>("AnswerText")
                         .HasColumnType("text");
 
-                    b.Property<int>("CardType")
+                    b.Property<int>("Category")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Cards");
+                    b.ToTable("Answers");
+                });
+
+            modelBuilder.Entity("UFRCards.Data.Entities.Question", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Category")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("QuestionText")
+                        .HasColumnType("text");
+
+                    b.Property<int>("QuestionType")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Questions");
                 });
 #pragma warning restore 612, 618
         }

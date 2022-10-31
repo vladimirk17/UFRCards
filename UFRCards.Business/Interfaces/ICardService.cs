@@ -4,6 +4,6 @@ namespace UFRCards.Business.Interfaces;
 
 public interface ICardService
 {
-    Task<IEnumerable<Card>> GetWhiteCardsAsync();
-    Task<IEnumerable<Card>> GetBlackCardsAsync();
+    Task<IEnumerable<Question>> GetAnswersAsync();
+    Task<IEnumerable<Question>> GetQuestionsAsync();
 }
