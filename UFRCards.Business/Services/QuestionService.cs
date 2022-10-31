@@ -16,7 +16,7 @@ public class CardService : ICardService
     }
 
     public async Task<IEnumerable<Question>> GetAnswersAsync() =>
-        await GetCardsByTypeAsync(QuestionType.ComplexOneSlot);
+        await GetCardsByTypeAsync(QuestionType.Complex);
 
     public async Task<IEnumerable<Question>> GetQuestionsAsync() => 
         await GetCardsByTypeAsync(QuestionType.Basic);

@@ -30,6 +30,7 @@ namespace UFRCards.Data.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     QuestionText = table.Column<string>(type: "text", nullable: true),
+                    SlotsCount = table.Column<int>(type: "integer", nullable: false),
                     QuestionType = table.Column<int>(type: "integer", nullable: false),
                     Category = table.Column<int>(type: "integer", nullable: false)
                 },

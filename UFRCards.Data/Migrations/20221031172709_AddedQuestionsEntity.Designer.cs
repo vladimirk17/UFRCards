@@ -11,7 +11,7 @@ using UFRCards.Data;
 namespace UFRCards.Data.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20221031164912_AddedQuestionsEntity")]
+    [Migration("20221031172709_AddedQuestionsEntity")]
     partial class AddedQuestionsEntity
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -57,6 +57,9 @@ namespace UFRCards.Data.Migrations
                         .HasColumnType("text");
 
                     b.Property<int>("QuestionType")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("SlotsCount")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");

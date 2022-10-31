@@ -3,6 +3,5 @@
 public enum QuestionType
 {
     Basic = 1,
-    ComplexOneSlot,
-    ComplexTwoSlot,
+    Complex
 }

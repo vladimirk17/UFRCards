@@ -57,6 +57,9 @@ namespace UFRCards.Data.Migrations
                     b.Property<int>("QuestionType")
                         .HasColumnType("integer");
 
+                    b.Property<int>("SlotsCount")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.ToTable("Questions");
