@@ -6,22 +6,21 @@ using UFRCards.Data.Enums;
 
 namespace UFRCards.Business.Services;
 
-public class CardService : ICardService
+public class QuestionService : IQuestionService
 {
     private readonly Context _context;
 
-    public CardService(Context context)
+    public QuestionService(Context context)
     {
         _context = context;
     }
 
-    public async Task<IEnumerable<Question>> GetAnswersAsync() =>
-        await GetCardsByTypeAsync(QuestionType.Complex);
+    public async Task<IEnumerable<Question>> GetQuestionsAsync(QuestionType questionType) => 
+        await GetQuestionsByTypeAsync(questionType);
+    
+    public async Task<IEnumerable<Answer>> GetAnswersAsync() => await _context.Answers.ToArrayAsync();
 
-    public async Task<IEnumerable<Question>> GetQuestionsAsync() => 
-        await GetCardsByTypeAsync(QuestionType.Basic);
-
-    private async Task<IEnumerable<Question>> GetCardsByTypeAsync(QuestionType questionType)
+    private async Task<IEnumerable<Question>> GetQuestionsByTypeAsync(QuestionType questionType)
     {
         return await _context.Questions
             .Where(x => x.QuestionType == questionType)

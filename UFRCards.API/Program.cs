@@ -31,7 +31,7 @@ builder.Services.AddDbContext<Context>(options =>
         optionsBuilder.MigrationsAssembly(migrationAssembly));
 });
 
-builder.Services.AddScoped<ICardService, CardService>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
 
 var app = builder.Build();
 
