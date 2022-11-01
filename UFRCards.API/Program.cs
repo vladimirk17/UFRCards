@@ -12,12 +12,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddCors();
 
+builder.Services.AddDbContext<Context>(options =>
 builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<UfrContext>(options =>
 {
     var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
-    var migrationAssembly = typeof(UfrContext).Namespace;
+    var migrationAssembly = typeof(Context).Namespace;
     
     var connectionString = string.Empty;
     
@@ -34,14 +35,14 @@ builder.Services.AddDbContext<UfrContext>(options =>
         optionsBuilder.MigrationsAssembly(migrationAssembly));
 });
 
-builder.Services.AddScoped<ICardService, CardService>();
+builder.Services.AddScoped<IQuestionService, QuestionService>();
 
 var app = builder.Build();
 
 //Middleware
 
 using var scope = app.Services.CreateScope();
-var context = scope.ServiceProvider.GetRequiredService<UfrContext>();
+var context = scope.ServiceProvider.GetRequiredService<Context>();
 var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
 
 try
