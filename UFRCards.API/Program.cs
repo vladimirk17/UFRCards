@@ -12,10 +12,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddCors();
 
-builder.Services.AddDbContext<Context>(options =>
 builder.Services.AddSignalR();
 
-builder.Services.AddDbContext<UfrContext>(options =>
+builder.Services.AddDbContext<Context>(options =>
 {
     var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
     var migrationAssembly = typeof(Context).Namespace;

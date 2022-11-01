@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UFRCards.Data;
@@ -11,9 +12,10 @@ using UFRCards.Data;
 namespace UFRCards.Data.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221101190759_AddedGameRooms")]
+    partial class AddedGameRooms
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -66,19 +68,6 @@ namespace UFRCards.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("GameRooms");
-                });
-
-            modelBuilder.Entity("UFRCards.Data.Entities.GameRound", b =>
-                {
-                    b.Property<int>("GameRoomId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("RoundNumber")
-                        .HasColumnType("integer");
-
-                    b.HasKey("GameRoomId", "RoundNumber");
-
-                    b.ToTable("GameRound");
                 });
 
             modelBuilder.Entity("UFRCards.Data.Entities.Player", b =>
@@ -149,9 +138,6 @@ namespace UFRCards.Data.Migrations
                             b1.Property<int>("GameRoomId")
                                 .HasColumnType("integer");
 
-                            b1.Property<int>("CurrentRound")
-                                .HasColumnType("integer");
-
                             b1.Property<int>("MaxRounds")
                                 .HasColumnType("integer");
 
@@ -170,17 +156,6 @@ namespace UFRCards.Data.Migrations
                         });
 
                     b.Navigation("GameRoomSettings");
-                });
-
-            modelBuilder.Entity("UFRCards.Data.Entities.GameRound", b =>
-                {
-                    b.HasOne("UFRCards.Data.Entities.GameRoom", "GameRoom")
-                        .WithMany("GameRounds")
-                        .HasForeignKey("GameRoomId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("GameRoom");
                 });
 
             modelBuilder.Entity("UFRCards.Data.Entities.Player", b =>
@@ -203,8 +178,6 @@ namespace UFRCards.Data.Migrations
 
             modelBuilder.Entity("UFRCards.Data.Entities.GameRoom", b =>
                 {
-                    b.Navigation("GameRounds");
-
                     b.Navigation("Players");
 
                     b.Navigation("Questions");
