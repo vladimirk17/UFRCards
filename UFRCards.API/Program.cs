@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using UFRCards.API.Hubs;
 using UFRCards.Business.Interfaces;
 using UFRCards.Business.Services;
 using UFRCards.Data;
@@ -10,6 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddCors();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<UfrContext>(options =>
 {
@@ -60,6 +63,7 @@ app.UseCors(options =>
 });
 
 app.MapControllers();
+app.MapHub<GameHub>("/game");
 
 app.MapGet("/", () => "Hello World!");
 
