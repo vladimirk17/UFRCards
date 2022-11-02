@@ -9,5 +9,5 @@ public class Question : IHasId<int>
     public string QuestionText { get; set; }
     public int SlotsCount { get; set; }
     public QuestionType QuestionType { get; set; }
-    public Category Category { get; set; }
+    public QuestionCategory QuestionCategory { get; set; }
 }

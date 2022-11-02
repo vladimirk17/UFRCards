@@ -10,18 +10,19 @@ public class Context : DbContext
     
     public DbSet<Question> Questions { get; set; }
     public DbSet<Answer> Answers { get; set; }
-    public DbSet<GameRoom> GameRooms { get; set; }
+    public DbSet<GameSession> GameSessions { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<GameRoom>()
-            .OwnsOne(x => x.GameRoomSettings);
+        modelBuilder.Entity<GameSession>()
+            .OwnsOne(x => x.GameSessionSettings);
 
         modelBuilder.Entity<GameRound>()
-            .HasKey(x => new { x.GameRoomId, x.RoundNumber });
+            .HasKey(x => new { GameRoomId = x.GameSessionId, x.RoundNumber });
 
         modelBuilder.Entity<GameRound>()
-            .Ignore(x => x.AnswerIdsByPlayerId);
+            .HasMany(x => x.PlayerAnswersSelections)
+            .WithOne(x => x.GameRound);
         
         base.OnModelCreating(modelBuilder);
     }

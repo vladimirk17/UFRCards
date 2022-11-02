@@ -8,7 +8,7 @@ public class Player : IHasId<int>
     public string Name { get; set; }
     public int Score { get; set; }
 
-    public int GameRoomId { get; set; }
-    public GameRoom GameRoom { get; set; }
+    public int GameSessionId { get; set; }
+    public GameSession GameSession { get; set; }
     public ICollection<Answer> Answers { get; set; }
 }

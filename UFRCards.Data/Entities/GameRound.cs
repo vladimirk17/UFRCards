@@ -1,12 +1,15 @@
-﻿namespace UFRCards.Data.Entities;
+﻿using UFRCards.Data.Interfaces;
 
-public class GameRound
+namespace UFRCards.Data.Entities;
+
+public class GameRound : IHasId<int>
 {
+    public int Id { get; set; }
     public int RoundNumber { get; set; }
 
-    public IDictionary<int, IEnumerable<int>> AnswerIdsByPlayerId { get; set; } =
-        new Dictionary<int, IEnumerable<int>>();
-    
-    public int GameRoomId { get; set; }
-    public GameRoom GameRoom { get; set; }
+    public ICollection<PlayerAnswersSelection> PlayerAnswersSelections { get; set; }
+    public int QuestionId { get; set; }
+    public Question Question { get; set; }
+    public int GameSessionId { get; set; }
+    public GameSession GameSession { get; set; }
 }

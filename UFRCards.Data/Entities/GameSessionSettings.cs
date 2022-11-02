@@ -2,7 +2,7 @@
 
 namespace UFRCards.Data.Entities;
 
-public class GameRoomSettings
+public class GameSessionSettings
 {
     public int UsersCount { get; set; }
     public int MaxRounds { get; set; }
