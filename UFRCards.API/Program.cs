@@ -1,5 +1,7 @@
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using UFRCards.API.Hubs;
+using UFRCards.Business.Dto;
 using UFRCards.Business.Interfaces;
 using UFRCards.Business.Services;
 using UFRCards.Data;
@@ -18,9 +20,9 @@ builder.Services.AddDbContext<Context>(options =>
 {
     var env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
     var migrationAssembly = typeof(Context).Namespace;
-    
+
     var connectionString = string.Empty;
-    
+
     if (env == "Development")
     {
         connectionString = builder.Configuration.GetConnectionString("defaultConnection");
@@ -29,12 +31,22 @@ builder.Services.AddDbContext<Context>(options =>
     {
         //Complete upon deploy
     }
-    
-    options.UseNpgsql(connectionString, optionsBuilder => 
+
+    options.UseNpgsql(connectionString, optionsBuilder =>
         optionsBuilder.MigrationsAssembly(migrationAssembly));
 });
 
+var mapperConfiguration = new MapperConfiguration(config =>
+{
+    config.AddProfile<MappingProfile>();
+});
+
+var mapper = mapperConfiguration.CreateMapper();
+
+builder.Services.AddSingleton(mapper);
+
 builder.Services.AddScoped<IQuestionService, QuestionService>();
+builder.Services.AddScoped<IGameSessionService, GameSessionService>();
 
 var app = builder.Build();
 

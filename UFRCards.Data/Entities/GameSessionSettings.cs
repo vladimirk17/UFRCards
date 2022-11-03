@@ -4,7 +4,7 @@ namespace UFRCards.Data.Entities;
 
 public class GameSessionSettings
 {
-    public int UsersCount { get; set; }
+    public int PlayersCount { get; set; }
     public int MaxRounds { get; set; }
     public int RoundsPassed { get; set; }
     public int CurrentRound { get; set; }
