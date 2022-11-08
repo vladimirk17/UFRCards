@@ -47,6 +47,7 @@ builder.Services.AddSingleton(mapper);
 
 builder.Services.AddScoped<IQuestionService, QuestionService>();
 builder.Services.AddScoped<IGameSessionService, GameSessionService>();
+builder.Services.AddScoped<IConnectionService, ConnectionService>();
 
 var app = builder.Build();
 
@@ -71,6 +72,7 @@ app.UseCors(options =>
     options
         .AllowAnyHeader()
         .AllowAnyMethod()
+        .AllowCredentials()
         .WithOrigins("http://localhost:3000");
 });
 

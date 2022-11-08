@@ -25,6 +25,11 @@ public class GameSessionService : IGameSessionService
             throw new ArgumentNullException(nameof(gameSessionDto));
         }
 
+        var questions = await _context.Questions
+            .Where(x => x.QuestionCategory == gameSessionDto.QuestionCategory)
+            .Take(gameSessionDto.RoundsCount)
+            .ToArrayAsync();
+        
         var gameSession = new GameSession
         {
             Name = gameSessionDto.Name,
@@ -34,7 +39,9 @@ public class GameSessionService : IGameSessionService
             {
                 MaxRounds = gameSessionDto.RoundsCount,
                 PlayersCount = gameSessionDto.NumberOfPlayers,
+                QuestionCategory = gameSessionDto.QuestionCategory,
             },
+            Questions = questions,
         };
 
         AddPlayersToSession(gameSession, gameSessionDto.Players);
@@ -73,6 +80,27 @@ public class GameSessionService : IGameSessionService
         };
 
         return gameSessionDto;
+    }
+
+    public async Task AddPlayerToSession(int gameSessionId, string playerName)
+    {
+        var gameSession = await _context.GameSessions
+            .FindAsync(gameSessionId);
+        
+        if (gameSession == null)
+        {
+            throw new KeyNotFoundException();
+        }
+
+        if (gameSession.GameSessionSettings.PlayersCount >= gameSession.GameSessionSettings.MaxPlayers)
+        {
+            throw new ArgumentException(); //TODO need custom ex class here
+        }
+        
+        var newPlayer = new Player { Name = playerName };
+        gameSession.Players.Add(newPlayer);
+        gameSession.GameSessionSettings.PlayersCount++;
+        await _context.SaveChangesAsync();
     }
 
     private static void AddPlayersToSession(GameSession gameSession, IEnumerable<PlayerDto> playerDtos)

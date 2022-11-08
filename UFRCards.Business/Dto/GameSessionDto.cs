@@ -1,4 +1,6 @@
-﻿namespace UFRCards.Business.Dto;
+﻿using UFRCards.Data.Enums;
+
+namespace UFRCards.Business.Dto;
 
 public class GameSessionDto
 {
@@ -6,4 +8,5 @@ public class GameSessionDto
     public int NumberOfPlayers { get; init; }
     public int RoundsCount { get; init; }
     public List<PlayerDto> Players { get; set; }
+    public QuestionCategory QuestionCategory { get; set; }
 }

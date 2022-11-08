@@ -1,6 +1,10 @@
-﻿namespace UFRCards.API.Interfaces;
+﻿using UFRCards.Business.Models;
+
+namespace UFRCards.API.Interfaces;
 
 public interface IGameClient
 {
-    Task ReceiveMessage(string user, string message);
+    Task ReceiveNotification(string user, string message);
+    Task ReceiveStartRoundData(StartRoundData startRoundData);
+    Task FinishGameRound(int roundId);
 }
