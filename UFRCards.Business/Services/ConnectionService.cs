@@ -22,13 +22,13 @@ public class ConnectionService : IConnectionService
         }
     }
 
-    public void DisconnectPlayerFromSession(PlayerConnection playerConnection)
+    public void DisconnectPlayerFromSession(string playerName)
     {
         lock (OnlinePlayers)
         {
-            if (OnlinePlayers.TryGetValue(playerConnection.PlayerName, out var connection))
+            if (OnlinePlayers.ContainsKey(playerName))
             {
-                OnlinePlayers.Remove(playerConnection.PlayerName);
+                OnlinePlayers.Remove(playerName);
             }
         }
     }
@@ -43,5 +43,20 @@ public class ConnectionService : IConnectionService
         }
 
         return result;
+    }
+
+    public string GetPlayerNameByConnectionId(string connectionId)
+    {
+        string playerName;
+        
+        lock (OnlinePlayers)
+        {
+            playerName = OnlinePlayers
+                .Where(x => x.Value.ConnectionId == connectionId)
+                .Select(x => x.Key)
+                .SingleOrDefault();
+        }
+
+        return playerName;
     }
 }
