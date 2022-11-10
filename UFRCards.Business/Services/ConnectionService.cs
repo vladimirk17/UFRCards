@@ -45,16 +45,18 @@ public class ConnectionService : IConnectionService
         return result;
     }
 
-    public string GetPlayerNameByConnectionId(string connectionId)
+    public (string, int) GetPlayerNameByConnectionId(string connectionId)
     {
-        string playerName;
+        (string, int) playerName;
         
         lock (OnlinePlayers)
         {
-            playerName = OnlinePlayers
+            var tmp = OnlinePlayers
                 .Where(x => x.Value.ConnectionId == connectionId)
-                .Select(x => x.Key)
+                .Select(x => new { x.Key, x.Value.GameSessionId })
                 .SingleOrDefault();
+
+            playerName = (tmp?.Key, tmp.GameSessionId);
         }
 
         return playerName;

@@ -44,7 +44,7 @@ public class GameSessionService : IGameSessionService
             Questions = questions,
         };
 
-        AddPlayersToSession(gameSession, gameSessionDto.Players);
+        // AddPlayersToSession(gameSession, gameSessionDto.Players);
         
         // var gameSession = _mapper.Map<GameSession>(gameSessionDto);
 
@@ -85,7 +85,9 @@ public class GameSessionService : IGameSessionService
     public async Task AddPlayerToSession(int gameSessionId, string playerName)
     {
         var gameSession = await _context.GameSessions
-            .FindAsync(gameSessionId);
+            .Include(x => x.Players)
+            .Where(x => x.Id == gameSessionId)
+            .SingleOrDefaultAsync();
         
         if (gameSession == null)
         {
@@ -103,6 +105,21 @@ public class GameSessionService : IGameSessionService
         await _context.SaveChangesAsync();
     }
 
+    public async Task RemovePlayerFromSession(int gameSessionId, string playerName)
+    {
+        var gameSession = await _context.GameSessions
+            .Include(x => x.Players)
+            .Where(x => x.Id == gameSessionId)
+            .SingleOrDefaultAsync();
+
+        var playerToRemove = gameSession.Players?.SingleOrDefault(x => x.Name == playerName);
+
+        gameSession.Players?.Remove(playerToRemove);
+        gameSession.GameSessionSettings.PlayersCount--;
+
+        await _context.SaveChangesAsync();
+    }
+    
     private static void AddPlayersToSession(GameSession gameSession, IEnumerable<PlayerDto> playerDtos)
     {
         var players = playerDtos

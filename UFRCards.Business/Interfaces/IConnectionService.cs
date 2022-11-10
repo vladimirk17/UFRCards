@@ -7,5 +7,5 @@ public interface IConnectionService
     void ConnectPlayerToSession(PlayerConnection playerConnection);
     void DisconnectPlayerFromSession(string playerName);
     IDictionary<string, string> GetOnlinePlayersByConnection();
-    string GetPlayerNameByConnectionId(string connectionId);
+    (string, int) GetPlayerNameByConnectionId(string connectionId);
 }

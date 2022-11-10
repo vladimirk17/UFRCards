@@ -45,8 +45,9 @@ public class GameHub : Hub<IGameClient>
 
         playerConnection.ConnectionId = Context.ConnectionId;
         _connectionService.ConnectPlayerToSession(playerConnection);
-        
+
         _logger.LogDebug("{PlayerName} connected", playerName);
+        Console.WriteLine($"{playerName} connected");
         
         await Clients.Group(sessionId.ToString()).ReceiveNotification(System,
             $"{playerConnection.PlayerName} connected to session {sessionId}");
@@ -94,14 +95,17 @@ public class GameHub : Hub<IGameClient>
         await Clients.Group(groupName).ReceiveNotification(user, message);
     }
 
-    public override Task OnDisconnectedAsync(Exception exception)
+    public override async Task OnDisconnectedAsync(Exception exception)
     {
-        var playerName = _connectionService.GetPlayerNameByConnectionId(Context.ConnectionId);
-        
+        var (playerName, sessionId) = _connectionService.GetPlayerNameByConnectionId(Context.ConnectionId);
+
+        await _gameSessionService.RemovePlayerFromSession(sessionId, playerName);
         _connectionService.DisconnectPlayerFromSession(playerName);
         
         _logger.LogDebug("{PlayerName} disconnected", playerName);
+        Console.WriteLine($"{playerName} disconnected");
+        await Clients.All.ReceiveNotification(System, $"{playerName} disconnected");
         
-        return base.OnDisconnectedAsync(exception);
+        await base.OnDisconnectedAsync(exception);
     }
 }
