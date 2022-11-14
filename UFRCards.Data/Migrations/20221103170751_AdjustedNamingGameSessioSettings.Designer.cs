@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using UFRCards.Data;
@@ -11,9 +12,10 @@ using UFRCards.Data;
 namespace UFRCards.Data.Migrations
 {
     [DbContext(typeof(Context))]
-    partial class ContextModelSnapshot : ModelSnapshot
+    [Migration("20221103170751_AdjustedNamingGameSessioSettings")]
+    partial class AdjustedNamingGameSessioSettings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,12 +79,6 @@ namespace UFRCards.Data.Migrations
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("CreatedBy")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("GameSessionStatus")
-                        .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
@@ -219,16 +215,10 @@ namespace UFRCards.Data.Migrations
                             b1.Property<int>("CurrentRound")
                                 .HasColumnType("integer");
 
-                            b1.Property<int>("MaxPlayers")
-                                .HasColumnType("integer");
-
                             b1.Property<int>("MaxRounds")
                                 .HasColumnType("integer");
 
                             b1.Property<int>("PlayersCount")
-                                .HasColumnType("integer");
-
-                            b1.Property<int>("QuestionCategory")
                                 .HasColumnType("integer");
 
                             b1.Property<int>("RoundsPassed")

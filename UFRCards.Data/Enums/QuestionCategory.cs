@@ -1,6 +1,6 @@
 ﻿namespace UFRCards.Data.Enums;
 
-public enum Category
+public enum QuestionCategory
 {
     Undefined = 0,
 }
