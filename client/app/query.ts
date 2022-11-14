@@ -10,7 +10,7 @@ const requests = {
 };
 
 const GameSession = {
-	createGameSession: (gameSession: any) => requests.post('gameSession', gameSession),	
+	create: (gameSession: any) => requests.post('gameSession', gameSession),	
 };
 
 const query = {

@@ -90,11 +90,6 @@ public class GameHub : Hub<IGameClient>
         
     }
 
-    public async Task SendMessage(string groupName, string user, string message)
-    {
-        await Clients.Group(groupName).ReceiveNotification(user, message);
-    }
-
     public override async Task OnDisconnectedAsync(Exception exception)
     {
         var (playerName, sessionId) = _connectionService.GetPlayerNameByConnectionId(Context.ConnectionId);
